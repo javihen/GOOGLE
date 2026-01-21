@@ -1,0 +1,24 @@
+{
+  "qa": {
+    "1": {
+      "pregunta": "¿Capital de Bolivia?",
+      "respuesta": "Sucre"
+    },
+    "2": {
+      "pregunta": "¿Ley educativa vigente en Bolivia?",
+      "respuesta": "Ley 070 Avelino Siñani - Elizardo Pérez"
+    },
+    "3": {
+      "pregunta": "¿Año de fundación de la Universidad Mayor de San Andrés?",
+      "respuesta": "1830"
+    },
+    "4": {
+      "pregunta": "¿Lenguaje usado para desarrollo web en el navegador?",
+      "respuesta": "JavaScript"
+    },
+    "5": {
+      "pregunta": "¿Base de datos NoSQL usada en este proyecto?",
+      "respuesta": "Firebase Realtime Database"
+    }
+  }
+}
