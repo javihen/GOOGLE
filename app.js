@@ -1,6 +1,6 @@
-/*******************************
- * CONFIGURACIÓN DE FIREBASE
- *******************************/
+/*********************************
+ * CONFIGURACIÓN FIREBASE
+ *********************************/
 const firebaseConfig = {
   apiKey: "AIzaSyAZhe5spL1KxSWCy8HzEug8Y5jV9gJegPA",
   authDomain: "esfm-453b2.firebaseapp.com",
@@ -14,11 +14,73 @@ const firebaseConfig = {
 // Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Referencia a la base de datos
+// Base de datos
 const db = firebase.database();
 
-// Exponer db a la consola (IMPORTANTE)
-window.db = db;
+/*********************************
+ * FUNCIONES SOLO PARA CONSOLA
+ *********************************/
 
-console.log("🔥 Firebase inicializado correctamente");
-console.log("Usa `db` desde la consola para hacer consultas");
+// Mostrar todas las preguntas
+function verTodo() {
+  db.ref("qa")
+    .once("value")
+    .then((snap) => console.log(snap.val()));
+}
+
+// Obtener respuesta por ID
+function respuestaPorId(id) {
+  db.ref(`qa/${id}`)
+    .once("value")
+    .then((snap) => {
+      if (snap.exists()) {
+        console.log("✅ Respuesta:", snap.val().respuesta);
+      } else {
+        console.log("❌ No existe esa pregunta");
+      }
+    });
+}
+
+// Preguntar por texto exacto
+function preguntar(textoPregunta) {
+  db.ref("qa")
+    .once("value")
+    .then((snap) => {
+      const data = snap.val();
+      let encontrada = false;
+
+      for (let key in data) {
+        if (data[key].pregunta === textoPregunta) {
+          console.log("✅ Respuesta:", data[key].respuesta);
+          encontrada = true;
+        }
+      }
+
+      if (!encontrada) {
+        console.log("❌ Pregunta no encontrada");
+      }
+    });
+}
+
+// Ver TODA la base (raíz)
+function verBaseCompleta() {
+  db.ref("/")
+    .once("value")
+    .then((snap) => console.log(snap.val()));
+}
+
+/*********************************
+ * EXPONER FUNCIONES A CONSOLA
+ *********************************/
+window.db = db;
+window.verTodo = verTodo;
+window.respuestaPorId = respuestaPorId;
+window.preguntar = preguntar;
+window.verBaseCompleta = verBaseCompleta;
+
+console.log("🔥 Firebase listo");
+console.log("Funciones disponibles:");
+console.log("- verTodo()");
+console.log("- respuestaPorId(id)");
+console.log("- preguntar('texto')");
+console.log("- verBaseCompleta()");
